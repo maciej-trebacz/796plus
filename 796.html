@@ -1,80 +1,97 @@
 <head>
-<title>796+</title>
+  <title>796+</title>
 </head>
 
 <body>
-<div class="container">
-    <div class="navbar navbar-default" role="navigation">
-        <div class="container-fluid">
-          <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
-              <span class="sr-only">Toggle navigation</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="#">796+</a>
-          </div>
-          <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-              {{> ticker}}
-            </ul>
-          </div><!--/.nav-collapse -->
-        </div><!--/.container-fluid -->
+  <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/">796+</a>
       </div>
+      <div class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="/">BTC Futures</a></li>
+          <li><a href="#">LTC Futures</a></li>
+          <li><a href="#">Logout</a></li>
+        </ul>
 
-  {{> hello}}
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="#" id="main_wallet">Main Wallet</a></li>
+          <li><a href="#" id="futures_wallet">Futures Wallet</a></li>
+        </ul>
+      </div><!--/.nav-collapse -->
+    </div>
+  </div>
+
+  <div class="container">
+    {{> orderbook}}
   </div>
 </body>
 
 <template name="ticker">
-<li><a><b>Last:</b> <span id="last-price">{{ticker.last}}</span></a></li>
-<li><a><b>High:</b> {{ticker.high}}</a></li>
-<li><a><b>Low:</b> {{ticker.low}}</a></li>
-<li><a><b>Last update:</b> {{ticker.date}}</a></li>
+  <li><a><b>Last:</b> <span id="last-price">{{ticker.last}}</span></a></li>
+  <li><a><b>High:</b> {{ticker.high}}</a></li>
+  <li><a><b>Low:</b> {{ticker.low}}</a></li>
+  <li><a><b>Last update:</b> {{ticker.date}}</a></li>
 </template>
-<template name="hello">
-<div class="row">
-    <div class="col-md-6">
-  <h3>Latest trades:</h3>
-  <table class="table table-striped table-condensed">
-      <thead>
-          <tr>
-              <th>Time</th>
-              <th>Price</th>
-              <th>Amount</th>
-            </tr>
-        </thead>
-        <tbody>
-  {{#each trades}}
-    {{> trade}}
-  {{/each}}
-  </tbody>
-  </table>
-</div>
-    <div class="col-md-6">
-  <h3>Orderbook:</h3>
 
-  <ul>
-  <table class="table table-striped table-condensed">
-      <thead>
+<template name="orderbook">
+  <div class="row">
+    <div class="col-md-4">
+      <h3>Bids</h3>
+      <table class="table table-striped table-condensed">
+        <thead>
           <tr>
-              <th>Type</th>
-              <th>Price</th>
-              <th>Amount</th>
-            </tr>
+            <th>Price</th>
+            <th>Amount</th>
+          </tr>
         </thead>
         <tbody>
-  {{#each orders.asks}}
-    {{> order}}
-  {{/each}}
-  {{#each orders.bids}}
-    {{> order}}
-  {{/each}}
-  </tbody>
-  </table>
-  </ul>
-  </div>
+        {{#each orders.bids}}
+          {{> order}}
+        {{/each}}
+        </tbody>
+      </table>
+    </div>
+    <div class="col-md-4">
+      <h3>Asks</h3>
+      <table class="table table-striped table-condensed">
+        <thead>
+          <tr>
+            <th>Price</th>
+            <th>Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+        {{#each orders.asks}}
+          {{> order}}
+        {{/each}}
+        </tbody>
+      </table>
+    </div>
+    <div class="col-md-4">
+      <h3>Latest trades</h3>
+      <table class="table table-striped table-condensed">
+        <thead>
+          <tr>
+            <th>Time</th>
+            <th>Price</th>
+            <th>Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+        {{#each trades}}
+          {{> trade}}
+        {{/each}}
+        </tbody>
+      </table>
+    </div>
   </div>
 </template>
 
@@ -87,9 +104,8 @@
 </template>
 
 <template name="order">
-<tr class='{{type}}'>
-    <td>{{type}}</td>
+  <tr>
     <td>{{price}}</td>
     <td>{{amount}}</td>
-</tr>
+  </tr>
 </template>

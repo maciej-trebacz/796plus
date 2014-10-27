@@ -23,14 +23,13 @@ if (Meteor.isClient) {
             return TickerData.findOne();
         }
     });
-    Template.hello.helpers({
+    Template.orderbook.helpers({
         trades: function () {
             return Trades.find({}, {sort: {date: -1}});
         },
         orders: function () {
             var bids = Orderbook.find({type: 'bid'}, {sort: {price: -1}});
             var asks = Orderbook.find({type: 'ask'}, {sort: {price: 1}}).fetch();
-            asks.reverse();
             return {asks: asks, bids: bids};
         }
     });
@@ -118,4 +117,22 @@ if (Meteor.isServer) {
                 Orderbook.remove({updated: { $lt: (new Date()).getTime() - 1000 }});
             });
     }, REFRESH_INTERVAL);
+
+    Meteor.methods({
+        authorize: function() {
+            var crypto = Npm.require('crypto');
+            var appId = '';
+            var apiKey = '';
+            var secretKey = '';
+            var timestamp = Math.round(+new Date() / 1000);
+
+            var paramUri = 'apikey=' + apiKey + '&appid=' + appId + '&secretkey=' + secretKey + '&timestamp=' + timestamp;
+
+            var signature = CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(CryptoJS.HmacSHA1(paramUri, secretKey)));
+
+            Meteor.http.call('GET', 'https://796.com/oauth/token?appid=' + appId + '&timestamp=' + timestamp + '&apikey=' + apiKey + '&sig=' + signature, {}, function (error, result) {
+                console.log(result.content);
+            });
+        }
+    });
 }
