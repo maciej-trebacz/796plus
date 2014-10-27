@@ -1,0 +1,18 @@
+/* CSS declarations go here */
+
+body {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.navbar {
+  margin-bottom: 20px;
+}
+
+.higher, .bid, .buy {
+    color: #0a0;
+}
+
+.lower, .ask, .sell {
+    color: #c00;
+}
