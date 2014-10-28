@@ -153,6 +153,9 @@ Meteor.methods({
 
         return body.data;
     },
+    refreshToken: function(token) {
+        accessToken = token;
+    },
     logout: function() {
         accessToken = null;
         return true;

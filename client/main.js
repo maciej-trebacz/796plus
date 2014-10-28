@@ -78,6 +78,7 @@ Template.main.events({
         Meteor.call('logout');
         Session.set('username', null);
     }
+    
 });
 
 Template.login.helpers({
@@ -112,6 +113,7 @@ Template.login.events({
             }
 
             Session.set('username', result.username);
+            Session.set('accessToken', unescape(result.access_token));
         });
     }
 });
@@ -121,6 +123,12 @@ Template.errors.helpers({
         return Errors.find();
     }
 });
+
+Template.main.rendered = function() {
+    var token = Session.get('accessToken');
+    if (token)
+        Meteor.call('refreshToken', token);
+}
 
 TickerData.find({}).observe({
     added: function(post) {
