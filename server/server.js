@@ -169,6 +169,8 @@ Meteor.methods({
 
             if (body.errno != 0) 
                 throw new Meteor.Error(body.errno, body.msg);
+
+            Orders.remove({id: id});
         });
     },
     openPosition: function(direction, price, qty, times) {
@@ -181,7 +183,7 @@ Meteor.methods({
                 access_token: ServerSession.get('accessToken')
             }
         }
-        else {
+        else if (direction == 'sell') {
             params = {
                 times: times,
                 sell_num: qty,
@@ -189,9 +191,9 @@ Meteor.methods({
                 access_token: ServerSession.get('accessToken')
             }
         }
-
-        console.log(params);
-        console.log('https://796.com/v1/weeklyfutures/open_' + direction);
+        else {
+            throw new Meteor.Error(0, 'Wrong direction.');
+        }
 
         Meteor.http.call('POST', 'https://796.com/v1/weeklyfutures/open_' + direction, {params: params}, function(error, result) {
             if (error) 
@@ -199,10 +201,11 @@ Meteor.methods({
 
             var body = JSON.parse(result.content);
 
-            console.log(body);
-
             if (body.errno != 0) 
                 throw new Meteor.Error(body.errno, body.msg);
+
+            var item = body.data;
+            Orders.insert({id: item.no, type: item.kp, direction: item.bs, price: item.price, qty: item.gnum, completed: item.cjnum, margin: item.bzj, status: item.state, updated: (new Date()).getTime() });
         });
     }
 });
