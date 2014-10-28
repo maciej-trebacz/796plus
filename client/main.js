@@ -65,6 +65,24 @@ Template.orderForm.events({
             if (error)
                 throwError(error);
         });
+    },
+    'keyup #qty': function(e) {
+
+        console.log('dupa');
+
+        var margin = $('#margin').val();
+        var times = 0;
+        var btc = Balances.findOne().futures_wallet.btc;
+
+        switch (margin) {
+            case '5': times = 20; break;
+            case '10': times = 10; break;
+            case '20': times = 5; break;
+        }
+
+        if ($(e.currentTarget).val() > btc * times) {
+            $(e.currentTarget).val(btc * times);
+        }
     }
 });
 
@@ -95,6 +113,23 @@ Template.positions.events({
         });
     }
 });
+
+// $('#order_size').keyup(function() {
+//         var btc = $('#futures_wallet').find('strong').html();
+//         var margin = $('#margin').val();
+//         var times = 0;
+
+//         switch (margin) {
+//             case '5': times = 20; break;
+//             case '10': times = 10; break;
+//             case '20': times = 5; break;
+//         }
+
+//         if ($(this).val() > btc * times)
+//         {
+//             $(this).val(btc * times);
+//         }
+//     });
 
 Template.recentTrades.helpers({
     trades: function() {
