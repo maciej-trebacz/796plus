@@ -22,6 +22,12 @@ Template.orderbook.helpers({
     }
 });
 
+Template.orders.helpers({
+    orders: function () {
+        return Orders.find();
+    }
+});
+
 Template.recentTrades.helpers({
     trades: function () {
         return Trades.find({}, {sort: {date: -1}});

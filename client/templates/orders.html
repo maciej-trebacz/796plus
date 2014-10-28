@@ -9,13 +9,15 @@
       <th class="hidden-sm hidden-xs">Initial Margin</th>
       <th>Action</th>
     </tr>
+    {{#each orders}}
     <tr>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td class="hidden-sm hidden-xs"></td>
+        <td>{{direction}}</td>
+        <td>{{qty}}</td>
+        <td>{{price}}</td>
+        <td>{{completed}}</td>
+        <td class="hidden-sm hidden-xs">{{margin}}</td>
       <td><a href="#" class="btn btn-sm btn-warning cancel_order" id="cancel_order">Cancel</a></td>
     </tr>
+    {{/each}}
   </table>
 </template>
