@@ -58,10 +58,10 @@ Template.orderForm.events({
 
         var direction = e.currentTarget.id;
         var qty = $('#order-form').find('#qty').val();
-        var times = $('#order-form').find('#times').val();
+        var margin = $('#order-form').find('#margin').val();
         var price = $('#order-form').find('#price').val();
 
-        Meteor.call('openPosition', direction, price, qty, times, function(error, result) {
+        Meteor.call('openPosition', direction, price, qty, margin, function(error, result) {
             if (error)
                 throwError(error);
         });
@@ -77,6 +77,22 @@ Template.positions.helpers({
     },
     isPLNegative: function() {
         return this.yk < 0;
+    }
+});
+
+Template.positions.events({
+    'click .offset': function(e) {
+        e.preventDefault();
+
+        var direction = $(e.currentTarget).data('direction');
+        var qty = $(e.currentTarget).parent().parent().find('.qty').val();
+        var margin = $(e.currentTarget).data('margin');
+        var price = $(e.currentTarget).parent().parent().find('.price').val();
+
+        Meteor.call('closePosition', direction, price, qty, margin, function(error, result) {
+            if (error)
+                throwError(error);
+        });
     }
 });
 

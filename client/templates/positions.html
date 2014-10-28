@@ -1,6 +1,6 @@
 <template name="positions">
   <h3>Positions held</h3>
-  <table class="table table-striped table-condensed">
+  <table class="table table-striped">
     <thead>
       <tr>
         <th>Type</th>
@@ -13,7 +13,7 @@
         <th class="hidden-sm hidden-xs">Fees</th>
         <th>Offset $</th>
         <th>Offset Qty.</th>
-        <th>Action</th>
+        <th width="60">Action</th>
       </tr>
     </thead>
     <tbody>
@@ -27,22 +27,22 @@
             <span class='buy'>↑ {{times}}%</span>
             {{/if}}
           </td>
-          <td>{{total}}</td>
-          <td class="hidden-sm hidden-xs">{{block_total}}</td>
+          <td>{{total}} <small>BTC</small></td>
+          <td class="hidden-sm hidden-xs">{{block_total}} <small>BTC</small></td>
           <td>{{avg_price}}</td>
           <td class="hidden-sm hidden-xs">{{bzj}}</td>
           <td class="hidden-sm hidden-xs">
             {{#if isPLNegative}}
-            <span class='sell'>{{yk}}</span>
+            <span class="sell">{{yk}} <small>BTC</small></span>
             {{else}}
-            <span class='buy'>{{yk}}</span>
+            <span class="buy">{{yk}} <small>BTC</small></span>
             {{/if}}
           </td>
           <td>{{ykl}}</td>
-          <td class="hidden-sm hidden-xs">{{fee}}</td>
-          <td><input type="text" name="offset_price" placeholder="$" class="form-control input-sm price" size="6"></td>
-          <td><input type="text" name="offset_qty" placeholder="Qty." class="form-control input-sm qty" size="6" value="{{total}}"></td>
-          <td><a href="#" class="btn btn-sm btn-warning offset">Offset</a></td>
+          <td class="hidden-sm hidden-xs">{{fee}} <small>BTC</small></td>
+          <td><input type="text" placeholder="$" class="form-control input-sm price" size="4"></td>
+          <td><input type="text" placeholder="Qty." class="form-control input-sm qty" size="4" value="{{total}}"></td>
+          <td><a href="#" class="btn btn-sm btn-warning offset" data-margin="{{times}}" data-direction="{{bs}}">Offset</a></td>
         </tr>
         {{/each}}
       {{else}}
