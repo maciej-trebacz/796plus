@@ -47,6 +47,15 @@ Template.main.helpers({
     }
 });
 
+Template.main.events({
+    'click #logout': function(e) {
+        e.preventDefault();
+
+        Meteor.call('logout');
+        Session.set('username', null);
+    }
+});
+
 Template.login.helpers({
     credentials: function() {
         return {
@@ -78,8 +87,6 @@ Template.login.events({
                 return;
             }
 
-            // Change %7 to |
-            Session.set('accessToken', decodeURI(result.access_token));
             Session.set('username', result.username);
         });
     }

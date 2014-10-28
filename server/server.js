@@ -1,5 +1,5 @@
 var REFRESH_INTERVAL = 1500;
-var access_token = "";
+var accessToken = "";
 
 Meteor.publish('tickerdata', function() {
     return TickerData.find(); 
@@ -75,15 +75,13 @@ Meteor.setInterval(function () {
         Orderbook.remove({updated: { $lt: (new Date()).getTime() - 1000 }});
     });
 
-    if (access_token != "") {
+    if (accessToken != "") {
         // Orders
-        Meteor.http.call('GET', 'https://796.com/v1/weeklyfutures/orders?access_token=' + access_token, {}, function(error, result) {
+        Meteor.http.call('GET', 'https://796.com/v1/weeklyfutures/orders?access_token=' + accessToken, {}, function(error, result) {
             if (error) return;
             var body = JSON.parse(result.content);
             // if (body.errno != 0)
             //     throw new Meteor.Error(body.errno, body.msg);
-
-            console.log(body);
 
             body.data.forEach(function(item) {
                 var check = Orders.findOne({id: item.no});
@@ -112,8 +110,13 @@ Meteor.methods({
         if (body.errno != 0)
             throw new Meteor.Error(body.errno, body.msg);
 
-        access_token = body.data.access_token;       
+        accessToken = body.data.access_token;       
 
         return body.data;
+    },
+    logout: function() {
+        accessToken = null;
+
+        return true;
     }
 });
