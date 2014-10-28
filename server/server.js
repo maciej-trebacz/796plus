@@ -77,7 +77,7 @@ Meteor.setInterval(function () {
 
     if (accessToken != "") {
         // Orders
-        Meteor.http.call('GET', 'https://796.com/v1/weeklyfutures/orders?access_token=' + accessToken, {}, function(error, result) {
+        Meteor.http.call('GET', 'https://796.com/v1/weeklyfutures/orders?access_token=' + encodeURIComponent(accessToken), {}, function(error, result) {
             if (error) return;
             var body = JSON.parse(result.content);
             // if (body.errno != 0)
@@ -95,7 +95,7 @@ Meteor.setInterval(function () {
         });
 
         // Positions
-        Meteor.http.call('GET', 'https://796.com/v1/weeklyfutures/position?access_token=' + accessToken, {}, function(error, result) {
+        Meteor.http.call('GET', 'https://796.com/v1/weeklyfutures/position?access_token=' + encodeURIComponent(accessToken), {}, function(error, result) {
             if (error) return;
             var body = JSON.parse(result.content);
 
@@ -146,7 +146,7 @@ Meteor.methods({
         if (body.errno != 0)
             throw new Meteor.Error(body.errno, body.msg);
 
-        accessToken = body.data.access_token;       
+        accessToken = unescape(body.data.access_token);
 
         return body.data;
     },
@@ -155,7 +155,7 @@ Meteor.methods({
         return true;
     },
     cancelOrder: function(id, direction) {
-        console.log({params: {bs: direction, no: id, access_token: accessToken.replace('%7', '|')}});
+        console.log({params: {bs: direction, no: id, access_token: accessToken}});
 
         Meteor.http.call('POST', 'https://796.com/v1/weeklyfutures/cancel_order', {params: {bs: direction, no: id, access_token: accessToken}}, function(error, result) {
             if (error) return;
