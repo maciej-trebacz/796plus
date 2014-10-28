@@ -45,7 +45,7 @@ Template.orders.events({
     'click .cancel-order': function(e) {
         e.preventDefault();
 
-        Meteor.call('cancelOrder', $(e.target).data('id'), $(e.target).data('direction'), function(error, result) {
+        Meteor.call('cancelOrder', $(e.currentTarget).data('id'), $(e.currentTarget).data('direction'), function(error, result) {
             if (error)
                 throwError(error);
         });
@@ -56,15 +56,10 @@ Template.orderForm.events({
     'click .submit-order': function(e) {
         e.preventDefault();
 
-        var direction = e.target.id;
+        var direction = e.currentTarget.id;
         var qty = $('#order-form').find('#qty').val();
         var times = $('#order-form').find('#times').val();
         var price = $('#order-form').find('#price').val();
-
-        console.log(direction);
-        console.log(qty);
-        console.log(times);
-        console.log(price);
 
         Meteor.call('openPosition', direction, price, qty, times, function(error, result) {
             if (error)
