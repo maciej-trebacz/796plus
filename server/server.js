@@ -1,4 +1,5 @@
 var REFRESH_INTERVAL = 1500;
+var access_token = "";
 
 Meteor.publish('tickerdata', function() {
     return TickerData.find(); 
@@ -97,7 +98,7 @@ Meteor.setInterval(function () {
 Meteor.methods({
     authorize: function(appId, apiKey, secretKey) {
         var timestamp = Math.round(+new Date() / 1000);
-        var paramUri = 'apikey=' + apiKey + '&appid=' + appId + '&secretkey=' + secretKey + '&timestamp=' + timestamp;
+        var paramUri = 'apikey=' + apiKey + '&appid=' + appId + '&secretkey=' + encodeURIComponent(secretKey) + '&timestamp=' + timestamp;
         var signature = CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(CryptoJS.HmacSHA1(paramUri, secretKey)));
 
         this.unblock();
@@ -107,6 +108,8 @@ Meteor.methods({
 
         if (body.errno != 0)
             throw new Meteor.Error(body.errno, body.msg);
+
+        access_token = body.data.access_token;       
 
         return body.data;
     }
