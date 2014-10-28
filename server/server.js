@@ -188,8 +188,13 @@ Meteor.methods({
             }
         }
 
+        console.log(params);
+        console.log('https://796.com/v1/weeklyfutures/open_' + direction);
+
         Meteor.http.call('POST', 'https://796.com/v1/weeklyfutures/open_' + direction, {params: params}, function(error, result) {
-            if (error) return;
+            if (error) 
+                throw new Meteor.Error(error.response.statusCode);
+            
             var body = JSON.parse(result.content);
 
             console.log(body);
