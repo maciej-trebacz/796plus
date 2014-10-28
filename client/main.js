@@ -23,8 +23,15 @@ Template.orderbook.helpers({
 });
 
 Template.orders.helpers({
-    orders: function () {
+    orders: function() {
         return Orders.find();
+    },
+    getStatus: function() {
+        switch (this.status) {
+            case 'not': return '<span class="label label-warning">In Queue</label>'; break;
+            case 'done': return '<span class="label label-success">Completed</label>'; break;
+            case 'wait': return '<span class="label label-info">Waiting</label>'; break;
+        }
     }
 });
 
@@ -44,7 +51,7 @@ Template.orderForm.events({
         e.preventDefault();
 
         var price;
-        var direction = $(e.target).attr('id');
+        var direction = e.target.id;
         var qty = $('#order-form').find('#qty').val();
         var times = $('#order-form').find('#times').val();
 
@@ -61,19 +68,19 @@ Template.orderForm.events({
 });
 
 Template.positions.helpers({
-    positions: function () {
+    positions: function() {
         return Positions.find();
     },
-    isTypeSell: function () {
+    isTypeSell: function() {
         return this.bs == "sell";
     },
-    isPLNegative: function () {
+    isPLNegative: function() {
         return this.yk < 0;
     }
 });
 
 Template.recentTrades.helpers({
-    trades: function () {
+    trades: function() {
         return Trades.find({}, {sort: {date: -1}});
     }
 });

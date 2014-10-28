@@ -15,8 +15,7 @@ body {
 .chart {
   overflow: hidden;
   width: 600px;/*820px;*/
-  height: 600px;
-  text-align: center;
+  height: 568px;
 }
 
 .chart iframe {

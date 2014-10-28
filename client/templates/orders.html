@@ -7,23 +7,29 @@
         <th>Quantity</th>
         <th>Price</th>
         <th>Completed</th>
-        <th class="hidden-sm hidden-xs">Initial Margin</th>
+        <th>Initial Margin</th>
         <th>Status</th>
         <th>Action</th>
       </tr>
     </thead>
     <tbody>
-      {{#each orders}}
-      <tr>
-        <td>{{type}} {{direction}}</td>
-        <td>{{qty}} BTC</td>
-        <td>{{price}}</td>
-        <td>{{completed}} BTC</td>
-        <td class="hidden-sm hidden-xs">{{margin}} BTC</td>
-        <td>{{status}}</td>
-        <td><a href="#" class="btn btn-xs btn-warning cancel-order" data-id="{{id}}" data-direction="{{direction}}">Cancel</a></td>
-      </tr>
-      {{/each}}
+      {{#if orders.count}}
+        {{#each orders}}
+        <tr>
+          <td>{{type}} {{direction}}</td>
+          <td>{{qty}} BTC</td>
+          <td>{{price}}</td>
+          <td>{{completed}} BTC</td>
+          <td>{{margin}} BTC</td>
+          <td>{{{getStatus}}}</td>
+          <td><a href="#" class="btn btn-xs btn-warning cancel-order" data-id="{{id}}" data-direction="{{direction}}">Cancel</a></td>
+        </tr>
+        {{/each}}
+      {{else}}
+        <tr>
+          <td colspan="7">No active orders.</td>
+        </tr>
+      {{/if}}
     </tbody>
   </table>
 </template>
