@@ -165,10 +165,36 @@ Meteor.methods({
             if (error) return;
             var body = JSON.parse(result.content);
 
-            // Remove order from collection
-            if (body.errno == 0)
-            {
-                Orders.remove({id: id});
+            if (body.errno == 0) {
+            }
+        });
+    },
+    openPosition: function(direction, price, qty, times) {
+        var params;
+        if (direction == 'buy') {
+            params = {
+                times: times,
+                buy_num: qty,
+                buy_price: price,
+                access_token: accessToken
+            }
+        }
+        else {
+            params = {
+                times: times,
+                sell_num: qty,
+                sell_price: price,
+                access_token: accessToken
+            }
+        }
+
+        Meteor.http.call('POST', 'https://796.com/v1/weeklyfutures/open_' + direction, {params: params}, function(error, result) {
+            if (error) return;
+            var body = JSON.parse(result.content);
+
+            console.log(body);
+
+            if (body.errno == 0) {
             }
         });
     }
