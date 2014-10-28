@@ -116,7 +116,16 @@ Meteor.methods({
     },
     logout: function() {
         accessToken = null;
-
         return true;
+    },
+    cancelOrder: function(id, direction) {
+        console.log({params: {bs: direction, no: id, access_token: accessToken.replace('%7', '|')}});
+
+        Meteor.http.call('POST', 'https://796.com/v1/weeklyfutures/cancel_order', {params: {bs: direction, no: id, access_token: accessToken}}, function(error, result) {
+            if (error) return;
+            var body = JSON.parse(result.content);
+
+            console.log(body);
+        });
     }
 });

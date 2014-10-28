@@ -28,6 +28,14 @@ Template.orders.helpers({
     }
 });
 
+Template.orders.events({
+    'click .cancel-order': function(e) {
+        e.preventDefault();
+
+        Meteor.call('cancelOrder', $(e.target).data('id'), $(e.target).data('direction'));
+    }
+});
+
 Template.recentTrades.helpers({
     trades: function () {
         return Trades.find({}, {sort: {date: -1}});

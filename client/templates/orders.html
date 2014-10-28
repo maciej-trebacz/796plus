@@ -1,23 +1,29 @@
 <template name="orders">
   <h3>Active orders<!-- <a href="#" class="btn btn-warning btn-xs" id="cancel_all_orders">Cancel all orders</a>--></h3>
-  <table class="table">
-    <tr>
-      <th>Type</th>
-      <th>Quantity</th>
-      <th>Price</th>
-      <th>Completed</th>
-      <th class="hidden-sm hidden-xs">Initial Margin</th>
-      <th>Action</th>
-    </tr>
-    {{#each orders}}
-    <tr>
-      <td>{{direction}}</td>
-      <td>{{qty}}</td>
-      <td>{{price}}</td>
-      <td>{{completed}}</td>
-      <td class="hidden-sm hidden-xs">{{margin}}</td>
-      <td><a href="#" class="btn btn-sm btn-warning cancel_order">Cancel</a></td>
-    </tr>
-    {{/each}}
+  <table class="table table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Quantity</th>
+        <th>Price</th>
+        <th>Completed</th>
+        <th class="hidden-sm hidden-xs">Initial Margin</th>
+        <th>Status</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each orders}}
+      <tr>
+        <td>{{type}} {{direction}}</td>
+        <td>{{qty}} BTC</td>
+        <td>{{price}}</td>
+        <td>{{completed}} BTC</td>
+        <td class="hidden-sm hidden-xs">{{margin}} BTC</td>
+        <td>{{status}}</td>
+        <td><a href="#" class="btn btn-xs btn-warning cancel-order" data-id="{{id}}" data-direction="{{direction}}">Cancel</a></td>
+      </tr>
+      {{/each}}
+    </tbody>
   </table>
 </template>
