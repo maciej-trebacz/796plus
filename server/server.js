@@ -1,4 +1,5 @@
 var REFRESH_INTERVAL = 1500;
+var access_token = "";
 
 Meteor.publish('tickerdata', function() {
     return TickerData.find(); 
@@ -74,30 +75,33 @@ Meteor.setInterval(function () {
         Orderbook.remove({updated: { $lt: (new Date()).getTime() - 1000 }});
     });
 
-    // Orders
-    Meteor.http.call('GET', 'https://796.com/v1/weeklyfutures/orders?access_token=', {}, function(error, result) {
-        if (error) return;
-        var body = JSON.parse(result.content);
-        // if (body.errno != 0)
-        //     throw new Meteor.Error(body.errno, body.msg);
+    if (access_token != "") {
+        // Orders
+        Meteor.http.call('GET', 'https://796.com/v1/weeklyfutures/orders?access_token=' + access_token, {}, function(error, result) {
+            if (error) return;
+            var body = JSON.parse(result.content);
+            // if (body.errno != 0)
+            //     throw new Meteor.Error(body.errno, body.msg);
 
-        console.log(body);
+            console.log(body);
 
-        body.data.forEach(function(item) {
-            var check = Orders.findOne({id: item.no});
-            if (! check)
-                Orders.insert({id: item.no, type: item.kp, direction: item.bs, price: item.price, qty: item.gnum, completed: item.cjnum, margin: item.bzj, status: item.state });
-            else
-                Orders.update(check._id, {$set: {id: item.no, type: item.kp, direction: item.bs, price: item.price, qty: item.gnum, completed: item.cjnum, margin: item.bzj, status: item.state }});
+            body.data.forEach(function(item) {
+                var check = Orders.findOne({id: item.no});
+                if (! check)
+                    Orders.insert({id: item.no, type: item.kp, direction: item.bs, price: item.price, qty: item.gnum, completed: item.cjnum, margin: item.bzj, status: item.state, updated: (new Date()).getTime() });
+                else
+                    Orders.update(check._id, {$set: {id: item.no, type: item.kp, direction: item.bs, price: item.price, qty: item.gnum, completed: item.cjnum, margin: item.bzj, status: item.state, updated: (new Date()).getTime() }});
+            });
+
+            Orders.remove({updated: { $lt: (new Date()).getTime() - 1000 }});
         });
-    });
-
+    }
 }, REFRESH_INTERVAL);
 
 Meteor.methods({
     authorize: function(appId, apiKey, secretKey) {
         var timestamp = Math.round(+new Date() / 1000);
-        var paramUri = 'apikey=' + apiKey + '&appid=' + appId + '&secretkey=' + secretKey + '&timestamp=' + timestamp;
+        var paramUri = 'apikey=' + apiKey + '&appid=' + appId + '&secretkey=' + encodeURIComponent(secretKey) + '&timestamp=' + timestamp;
         var signature = CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(CryptoJS.HmacSHA1(paramUri, secretKey)));
 
         this.unblock();
@@ -107,6 +111,8 @@ Meteor.methods({
 
         if (body.errno != 0)
             throw new Meteor.Error(body.errno, body.msg);
+
+        access_token = body.data.access_token;       
 
         return body.data;
     }

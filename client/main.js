@@ -22,6 +22,12 @@ Template.orderbook.helpers({
     }
 });
 
+Template.orders.helpers({
+    orders: function () {
+        return Orders.find();
+    }
+});
+
 Template.recentTrades.helpers({
     trades: function () {
         return Trades.find({}, {sort: {date: -1}});
@@ -41,6 +47,16 @@ Template.main.helpers({
     }
 });
 
+Template.login.helpers({
+    credentials: function() {
+        return {
+            id: localStorage.getItem('appId'),
+            key: localStorage.getItem('apiKey'),
+            secret: localStorage.getItem('secretKey'),
+        }
+    }
+});
+
 Template.login.events({
     'submit form': function(e) {
         e.preventDefault();
@@ -52,15 +68,15 @@ Template.login.events({
         }
 
         Meteor.call('authorize', login.appId, login.apiKey, login.secretKey, function(error, result) {
-            if (error) {
-                throwError(error);
-                return;
-            }
-
             // Save credentials
             localStorage.setItem('appId', login.appId);
             localStorage.setItem('apiKey', login.apiKey);
             localStorage.setItem('secretKey', login.secretKey);
+
+            if (error) {
+                throwError(error);
+                return;
+            }
 
             // Change %7 to |
             Session.set('accessToken', decodeURI(result.access_token));
