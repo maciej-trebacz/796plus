@@ -43,12 +43,13 @@
       {{> positions}}
 
       <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-8" id="col-chart">
           <div class="chart">
             <iframe src="https://bitcoinwisdom.com/markets/796/futures" seamless width="1100" height="400"></iframe>
           </div>
+          <a href="#" class="btn btn-default widen-chart">-></a>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-4" id="col-order-form">
           {{> orderForm}}
         </div>
       </div>

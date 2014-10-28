@@ -67,9 +67,6 @@ Template.orderForm.events({
         });
     },
     'keyup #qty': function(e) {
-
-        console.log('dupa');
-
         var margin = $('#margin').val();
         var times = 0;
         var btc = Balances.findOne().futures_wallet.btc;
@@ -114,23 +111,6 @@ Template.positions.events({
     }
 });
 
-// $('#order_size').keyup(function() {
-//         var btc = $('#futures_wallet').find('strong').html();
-//         var margin = $('#margin').val();
-//         var times = 0;
-
-//         switch (margin) {
-//             case '5': times = 20; break;
-//             case '10': times = 10; break;
-//             case '20': times = 5; break;
-//         }
-
-//         if ($(this).val() > btc * times)
-//         {
-//             $(this).val(btc * times);
-//         }
-//     });
-
 Template.recentTrades.helpers({
     trades: function() {
         return Trades.find({}, {sort: {date: -1}});
@@ -159,8 +139,16 @@ Template.main.events({
 
         Meteor.call('logout');
         Session.set('username', null);
+    },
+    'click .widen-chart': function(e) {
+        e.preventDefault();
+
+        $('#col-chart').removeClass('col-md-8').addClass('col-md-12');
+        $('#col-chart').find('.chart').width('100%');
+        $('#col-chart').find('iframe').attr('width', '1345');
+
+        $('#col-order-form').removeClass('col-md-4').addClass('col-md-12');
     }
-    
 });
 
 Template.login.helpers({
