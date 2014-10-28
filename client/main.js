@@ -56,15 +56,15 @@ Template.orderForm.events({
     'click .submit-order': function(e) {
         e.preventDefault();
 
-        var price;
         var direction = e.target.id;
         var qty = $('#order-form').find('#qty').val();
         var times = $('#order-form').find('#times').val();
+        var price = $('#order-form').find('#price').val();
 
-        if (direction == 'buy')
-            price = $('#order-form').find('#buy-price').val();
-        else
-            price = $('#order-form').find('#sell-price').val();
+        console.log(direction);
+        console.log(qty);
+        console.log(times);
+        console.log(price);
 
         Meteor.call('openPosition', direction, price, qty, times, function(error, result) {
             if (error)

@@ -14,8 +14,8 @@ body {
 
 .chart {
   overflow: hidden;
-  width: 600px;/*820px;*/
-  height: 568px;
+  width: 700px;/*820px;*/
+  height: 368px;
 }
 
 .chart iframe {
@@ -23,7 +23,7 @@ body {
 }
 
 #order-form {
-  margin-top: 170px;
+  margin-top: 80px;
 }
 
 @-webkit-keyframes fadeOut {
