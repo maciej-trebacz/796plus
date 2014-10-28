@@ -93,6 +93,30 @@ Meteor.setInterval(function () {
 
             Orders.remove({updated: { $lt: (new Date()).getTime() - 1000 }});
         });
+
+        // Positions
+        Meteor.http.call('GET', 'https://796.com/v1/weeklyfutures/position?access_token=' + accessToken, {}, function(error, result) {
+            if (error) return;
+            var body = JSON.parse(result.content);
+
+            function insertPosition(item) {
+                var check = Positions.findOne({bs: item.bs, times: item.times});
+                item.updated = (new Date()).getTime();
+                if (!check)
+                    Positions.insert(item);
+                else
+                    Positions.update(check._id, {$set: item});
+            }
+
+            for (key in body.data.buy) {
+                insertPosition(body.data.buy[key]);
+            }
+            for (key in body.data.sell) {
+                insertPosition(body.data.sell[key]);
+            }
+
+            Positions.remove({updated: { $lt: (new Date()).getTime() - 1000 }});
+        });
     }
 }, REFRESH_INTERVAL);
 

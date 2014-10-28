@@ -36,6 +36,18 @@ Template.orders.events({
     }
 });
 
+Template.positions.helpers({
+    positions: function () {
+        return Positions.find();
+    },
+    isTypeSell: function () {
+        return this.bs == "sell";
+    },
+    isPLNegative: function () {
+        return this.yk < 0;
+    }
+});
+
 Template.recentTrades.helpers({
     trades: function () {
         return Trades.find({}, {sort: {date: -1}});

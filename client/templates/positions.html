@@ -1,10 +1,11 @@
 <template name="positions">
   <h3>Positions held</h3>
   <table class="table">
+    <thead>
     <tr>
       <th>Type</th>
       <th>Qty.</th>
-      <th class="hidden-sm hidden-xs">Matched</th>
+      <th class="hidden-sm hidden-xs">Offsetting</th>
       <th>Avg. $</th>
       <th class="hidden-sm hidden-xs">Margin</th>
       <th class="hidden-sm hidden-xs">UnR P/L</th>
@@ -14,18 +15,35 @@
       <th>Offset Qty.</th>
       <th>Action</th>
     </tr>
+    </thead>
+    <tbody>
+    {{#each positions}}
     <tr>
-      <td></td>
-      <td></td>
-      <td class="hidden-sm hidden-xs"></td>
-      <td></td>
-      <td class="hidden-sm hidden-xs"></td>
-      <td class="hidden-sm hidden-xs"></td>
-      <td></td>
-      <td class="hidden-sm hidden-xs"></td>
+      <td>
+          {{#if isTypeSell}}
+          <span class='sell'>↓ {{times}}%</span>
+          {{else}}
+          <span class='buy'>↑ {{times}}%</span>
+          {{/if}}
+      </td>
+      <td>{{total}}</td>
+      <td class="hidden-sm hidden-xs">{{block_total}}</td>
+      <td>{{avg_price}}</td>
+      <td class="hidden-sm hidden-xs">{{bzj}}</td>
+      <td class="hidden-sm hidden-xs">
+          {{#if isPLNegative}}
+          <span class='sell'>{{yk}}</span>
+          {{else}}
+          <span class='buy'>{{yk}}</span>
+          {{/if}}
+      </td>
+      <td>{{ykl}}</td>
+      <td class="hidden-sm hidden-xs">{{fee}}</td>
       <td><input type="text" name="offset_price" placeholder="$" class="form-control input-sm price" size="6"></td>
-      <td><input type="text" name="offset_qty" placeholder="Qty." class="form-control input-sm qty" size="6" value=""></td>
+      <td><input type="text" name="offset_qty" placeholder="Qty." class="form-control input-sm qty" size="6" value="{{total}}"></td>
       <td><a href="#" class="btn btn-sm btn-warning offset">Offset</a></td>
     </tr>
+    {{/each}}
+    </tbody>
   </table>
 </template>
