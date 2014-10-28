@@ -22,6 +22,10 @@ body {
   border: 0;
 }
 
+#order-form {
+  margin-top: 170px;
+}
+
 @-webkit-keyframes fadeOut {
   0% {opacity: 0;}
   10% {opacity: 1;}

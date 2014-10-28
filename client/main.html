@@ -42,13 +42,16 @@
       {{> orders}}
       {{> positions}}
 
-      <div class="chart">
-        <iframe src="https://bitcoinwisdom.com/markets/796/futures" seamless width="1000" height="600"></iframe>
+      <div class="row">
+        <div class="col-md-7">
+          <div class="chart">
+            <iframe src="https://bitcoinwisdom.com/markets/796/futures" seamless width="1000" height="600"></iframe>
+          </div>
+        </div>
+        <div class="col-md-5">
+          {{> orderForm}}
+        </div>
       </div>
-
-      <hr>
-      {{> orderForm}}
-      <hr>
     {{else}}
       {{> login}}
     {{/if}}
