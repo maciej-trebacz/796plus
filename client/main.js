@@ -32,7 +32,10 @@ Template.orders.events({
     'click .cancel-order': function(e) {
         e.preventDefault();
 
-        Meteor.call('cancelOrder', $(e.target).data('id'), $(e.target).data('direction'));
+        Meteor.call('cancelOrder', $(e.target).data('id'), $(e.target).data('direction'), function(error, result) {
+            if (error)
+                throwError(error);
+        });
     }
 });
 
@@ -50,7 +53,10 @@ Template.orderForm.events({
         else
             price = $('#order-form').find('#sell-price').val();
 
-        Meteor.call('openPosition', direction, price, qty, times);
+        Meteor.call('openPosition', direction, price, qty, times, function(error, result) {
+            if (error)
+                throwError(error);
+        });
     }
 });
 

@@ -1,4 +1,4 @@
-var REFRESH_INTERVAL = 5000;
+var REFRESH_INTERVAL = 2000;
 var accessToken = "";
 
 Meteor.publish('tickerdata', function() {
@@ -165,8 +165,8 @@ Meteor.methods({
             if (error) return;
             var body = JSON.parse(result.content);
 
-            if (body.errno == 0) {
-            }
+            if (body.errno != 0) 
+                throw new Meteor.Error(body.errno, body.msg);
         });
     },
     openPosition: function(direction, price, qty, times) {
@@ -194,8 +194,8 @@ Meteor.methods({
 
             console.log(body);
 
-            if (body.errno == 0) {
-            }
+            if (body.errno != 0) 
+                throw new Meteor.Error(body.errno, body.msg);
         });
     }
 });
