@@ -1,4 +1,4 @@
-var REFRESH_INTERVAL = 1500;
+var REFRESH_INTERVAL = 5000;
 var accessToken = "";
 
 Meteor.publish('tickerdata', function() {
@@ -119,15 +119,18 @@ Meteor.setInterval(function () {
         });
 
         // Balances
-        Meteor.http.call('GET', 'https://796.com/v1/user/get_balance?access_token=' + accessToken, {}, function(error, result) {
+        Meteor.http.call('GET', 'https://796.com/v1/user/get_balance?access_token=' + encodeURIComponent(accessToken), {}, function(error, result) {
             if (error) return;
             var body = JSON.parse(result.content);
 
-            var balances = Balances.findOne({});
-            if (! balances)
-                Balances.insert(body.data);
-            else 
-                Balances.update(balances._id, {$set: body.data});
+            if (body.errno == 0)
+            {
+                var balances = Balances.findOne({});
+                if (! balances)
+                    Balances.insert(body.data);
+                else 
+                    Balances.update(balances._id, {$set: body.data});
+            }
         });
     }
 }, REFRESH_INTERVAL);
@@ -155,13 +158,15 @@ Meteor.methods({
         return true;
     },
     cancelOrder: function(id, direction) {
-        console.log({params: {bs: direction, no: id, access_token: accessToken}});
-
         Meteor.http.call('POST', 'https://796.com/v1/weeklyfutures/cancel_order', {params: {bs: direction, no: id, access_token: accessToken}}, function(error, result) {
             if (error) return;
             var body = JSON.parse(result.content);
 
-            console.log(body);
+            // Remove order from collection
+            if (body.errno == 0)
+            {
+                Orders.remove({id: id});
+            }
         });
     }
 });
