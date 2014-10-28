@@ -16,9 +16,21 @@ Meteor.publish('asks', function() {
     return Orderbook.find({type: 'ask'}, {sort: {price:  1}, limit: 30});
 });
 
+Meteor.publish('orders', function() {
+    return Orders.find();
+});
+
+Meteor.publish('positions', function() {
+    return Positions.find();
+});
+
+Meteor.publish('balances', function() {
+    return Balances.find();
+});
+
 Meteor.setInterval(function () { 
     // Ticker
-    Meteor.http.call("GET", "http://api.796.com/v3/futures/ticker.html?type=weekly", {}, function (error, result) {
+    Meteor.http.call('GET', 'http://api.796.com/v3/futures/ticker.html?type=weekly', {}, function(error, result) {
         if (error) return;
         var data = JSON.parse(result.content);
         var ticker = TickerData.findOne({});
@@ -31,7 +43,7 @@ Meteor.setInterval(function () {
     });
 
     // Trades
-    Meteor.http.call("GET", "http://api.796.com/v3/futures/trades.html?type=weekly", {}, function (error, result) {
+    Meteor.http.call('GET', 'http://api.796.com/v3/futures/trades.html?type=weekly', {}, function(error, result) {
         if (error) return;
         var data = JSON.parse(result.content);
         data.forEach(function(item) {
@@ -41,15 +53,17 @@ Meteor.setInterval(function () {
     });
 
     // Orderbook
-    Meteor.http.call("GET", "http://api.796.com/v3/futures/depth.html?type=weekly", {}, function (error, result) {
+    Meteor.http.call('GET', 'http://api.796.com/v3/futures/depth.html?type=weekly', {}, function(error, result) {
         function insertOrder(type, price, amount) {
             var check = Orderbook.findOne({type: type, price: price, amount: amount});
-            if (!check) 
+            if (! check) 
                 Orderbook.insert({type:type, price: price, amount: amount, updated: (new Date()).getTime()});
             else 
                 Orderbook.update(check._id, {$set: {updated: (new Date()).getTime()}});
         }
+
         if (error) return;
+
         var data = JSON.parse(result.content);
         data.bids.forEach(function(item) {
             insertOrder('bid', item[0], item[1]);
@@ -59,6 +73,25 @@ Meteor.setInterval(function () {
         });
         Orderbook.remove({updated: { $lt: (new Date()).getTime() - 1000 }});
     });
+
+    // Orders
+    Meteor.http.call('GET', 'https://796.com/v1/weeklyfutures/orders?access_token=', {}, function(error, result) {
+        if (error) return;
+        var body = JSON.parse(result.content);
+        // if (body.errno != 0)
+        //     throw new Meteor.Error(body.errno, body.msg);
+
+        console.log(body);
+
+        body.data.forEach(function(item) {
+            var check = Orders.findOne({id: item.no});
+            if (! check)
+                Orders.insert({id: item.no, type: item.kp, direction: item.bs, price: item.price, qty: item.gnum, completed: item.cjnum, margin: item.bzj, status: item.state });
+            else
+                Orders.update(check._id, {$set: {id: item.no, type: item.kp, direction: item.bs, price: item.price, qty: item.gnum, completed: item.cjnum, margin: item.bzj, status: item.state }});
+        });
+    });
+
 }, REFRESH_INTERVAL);
 
 Meteor.methods({

@@ -4,6 +4,9 @@ Meteor.subscribe('tickerdata');
 Meteor.subscribe('trades');
 Meteor.subscribe('bids');
 Meteor.subscribe('asks');
+Meteor.subscribe('orders');
+Meteor.subscribe('positions');
+Meteor.subscribe('balances');
 
 Template.ticker.helpers({
     ticker: function () {
@@ -34,7 +37,6 @@ Template.trade.helpers({
 
 Template.main.helpers({
     currentUser: function() {
-        console.log(Session.get('username'));
         return Session.get('username');
     }
 });
@@ -63,8 +65,6 @@ Template.login.events({
             // Change %7 to |
             Session.set('accessToken', decodeURI(result.access_token));
             Session.set('username', result.username);
-
-            console.log(Session.get('username'));
         });
     }
 });
