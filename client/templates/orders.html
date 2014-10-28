@@ -16,7 +16,7 @@
       {{#if orders.count}}
         {{#each orders}}
         <tr>
-          <td>{{type}} {{direction}}</td>
+          <td>{{getType}} {{direction.capitalize}}</td>
           <td>{{qty}} BTC</td>
           <td>{{price}}</td>
           <td>{{completed}} BTC</td>

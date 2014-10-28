@@ -32,6 +32,12 @@ Template.orders.helpers({
             case 'done': return '<span class="label label-success">Completed</label>'; break;
             case 'wait': return '<span class="label label-info">Waiting</label>'; break;
         }
+    },
+    getType: function() {
+        if (this.type == 'kai') 
+            return 'Open';
+        else
+            return 'Close';
     }
 });
 
