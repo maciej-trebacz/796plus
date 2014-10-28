@@ -12,6 +12,17 @@ body {
     color: #c00;
 }
 
+.chart {
+  overflow: hidden;
+  width: 600px;/*820px;*/
+  height: 600px;
+  text-align: center;
+}
+
+.chart iframe {
+  border: 0;
+}
+
 @-webkit-keyframes fadeOut {
   0% {opacity: 0;}
   10% {opacity: 1;}
@@ -36,6 +47,7 @@ body {
   bottom: 0px;
   pointer-events: none;
 }
+
 .alert {
           animation: fadeOut 4700ms ease-in 0s 1 forwards;
   -webkit-animation: fadeOut 4700ms ease-in 0s 1 forwards;
