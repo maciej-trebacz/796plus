@@ -1,0 +1,44 @@
+<template name="orderForm">
+  <form role="form">
+    <div class="row">
+      <div class="col-sm-3">
+        <div class="form-group">
+          <a href="#" class="btn btn-lg btn-block btn-success submit_order">
+            <strong>BUY</strong><br>
+            <small id="buy-price"></small>
+          </a>
+        </div>
+      </div>
+      <div class="col-sm-2">
+        <div class="form-group">
+          <input type="text" name="buy_price" placeholder="Buy price" class="form-control input-lg" id="buy_price">
+        </div>
+      </div>
+      <div class="col-sm-2">
+        <div class="form-group">
+          <input type="text" name="qty" placeholder="Order size" class="form-control input-lg" id="order_size">
+        </div>
+        <div class="form-group">
+          <select name="margin" class="form-control" id="margin">
+            <option value="5" selected>5%</option>
+            <option value="10">10%</option>
+            <option value="20">20%</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-sm-2">
+        <div class="form-group">
+          <input type="text" name="sell_price" placeholder="Sell price" class="form-control input-lg" id="sell_price">
+        </div>
+      </div>
+      <div class="col-sm-3">
+        <div class="form-group">
+          <a href="#" class="btn btn-lg btn-block btn-danger submit_order">
+            <strong>SELL</strong><br>
+            <small id="sell-price"></small>
+          </a>
+        </div>
+      </div>
+    </div>
+  </form>
+</template>
