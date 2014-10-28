@@ -36,6 +36,24 @@ Template.orders.events({
     }
 });
 
+Template.orderForm.events({
+    'click .submit-order': function(e) {
+        e.preventDefault();
+
+        var price;
+        var direction = $(e.target).attr('id');
+        var qty = $('#order-form').find('#qty').val();
+        var times = $('#order-form').find('#times').val();
+
+        if (direction == 'buy')
+            price = $('#order-form').find('#buy-price').val();
+        else
+            price = $('#order-form').find('#sell-price').val();
+
+        Meteor.call('openPosition', direction, price, qty, times);
+    }
+});
+
 Template.positions.helpers({
     positions: function () {
         return Positions.find();
@@ -66,7 +84,6 @@ Template.main.helpers({
         return Session.get('username');
     },
     balances: function() {
-        console.log(Balances.findOne());
         return Balances.findOne();
     }
 });
