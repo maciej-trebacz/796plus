@@ -1,0 +1,25 @@
+<template name="recentTrades">
+  <h3>Recent trades</h3>
+  <table class="table table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Time</th>
+        <th>Price</th>
+        <th>Amount</th>
+      </tr>
+    </thead>
+    <tbody>
+    {{#each trades}}
+      {{> trade}}
+    {{/each}}
+    </tbody>
+  </table>
+</template>
+
+<template name="trade">
+  <tr class='{{type}}'>
+    <td>{{formatDate date}}</td>
+    <td>{{price}}</td>
+    <td>{{amount}}</td>
+  </tr>
+</template>
