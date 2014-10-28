@@ -147,6 +147,13 @@ Template.errors.helpers({
     }
 });
 
+Template.error.rendered = function() {
+  var error = this.data;
+  Meteor.setTimeout(function () {
+    Errors.remove(error._id);
+  }, 5000);
+};
+
 Template.main.rendered = function() {
     var token = Session.get('accessToken');
     if (token)
