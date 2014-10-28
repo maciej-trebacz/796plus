@@ -64,6 +64,10 @@ Template.trade.helpers({
 Template.main.helpers({
     currentUser: function() {
         return Session.get('username');
+    },
+    balances: function() {
+        console.log(Balances.findOne());
+        return Balances.findOne();
     }
 });
 

@@ -35,7 +35,7 @@ Meteor.setInterval(function () {
         if (error) return;
         var data = JSON.parse(result.content);
         var ticker = TickerData.findOne({});
-        if (!ticker) 
+        if (! ticker) 
             TickerData.insert(data.ticker);
         else {
             data.ticker.date = (new Date()).formattedTime();
@@ -102,7 +102,7 @@ Meteor.setInterval(function () {
             function insertPosition(item) {
                 var check = Positions.findOne({bs: item.bs, times: item.times});
                 item.updated = (new Date()).getTime();
-                if (!check)
+                if (! check)
                     Positions.insert(item);
                 else
                     Positions.update(check._id, {$set: item});
@@ -116,6 +116,18 @@ Meteor.setInterval(function () {
             }
 
             Positions.remove({updated: { $lt: (new Date()).getTime() - 1000 }});
+        });
+
+        // Balances
+        Meteor.http.call('GET', 'https://796.com/v1/user/get_balance?access_token=' + accessToken, {}, function(error, result) {
+            if (error) return;
+            var body = JSON.parse(result.content);
+
+            var balances = Balances.findOne({});
+            if (! balances)
+                Balances.insert(body.data);
+            else 
+                Balances.update(balances._id, {$set: body.data});
         });
     }
 }, REFRESH_INTERVAL);
