@@ -2,10 +2,11 @@
 
 ### Installation
 
-1. Install [Meteor](https://www.meteor.com) `curl https://install.meteor.com/ | sh`
-2. Create a new Meteor application: `meteor create 796`
-3. Replace placeholder files with the ones from the repository
-4. Add necessary packages:
+Step 1. Download zipped archive from this repository
+Step 2. Install [Meteor](https://www.meteor.com): `curl https://install.meteor.com/ | sh`
+Step 3. Create a new Meteor application: `meteor create 796`
+Step 4. Remove placeholder files and replace them with the ones from the archive
+Step 5. Add necessary packages:
 
 ```
 meteor add mizzao:bootstrap-3
@@ -17,7 +18,8 @@ meteor add iron:router
 meteor add maazalik:highcharts
 ```
 
-5. Run the Meteor server: `meteor`
+Step 6. Run the Meteor server: `meteor`
+Step 7. Website is accessible at: `http://localhost:3000`
 
 ### Screenshots
 
@@ -28,3 +30,4 @@ meteor add maazalik:highcharts
 
 * Donations BTC: [3JNTo7aAd9pwfciLtPqBtfFmxs3MH5pDci](http://btc.blockr.io/address/info/3JNTo7aAd9pwfciLtPqBtfFmxs3MH5pDci)
 * [Create 796 Account](https://796.com/invite/do/134907)
+* 796plus utilizes 796.com API to make requests on your accounts behalf. Your API keys are never sent to any location, they are only store in the Meteor application to make API calls.
