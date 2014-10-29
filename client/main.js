@@ -235,12 +235,6 @@ Template.notification.rendered = function() {
   }, 5000);
 };
 
-Template.main.rendered = function() {
-    var token = Session.get('accessToken');
-    if (token)
-        Meteor.call('refreshToken', token);
-}
-
 TickerData.find({}).observe({
     added: function(post) {
         lastPrice = post.last;

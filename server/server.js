@@ -152,9 +152,6 @@ Meteor.methods({
 
         return body.data;
     },
-    refreshToken: function(token) {
-        accessToken = token;
-    },
     logout: function() {
         ServerSession.set('accessToken', null);
         // Send call to 796 (delete token)
