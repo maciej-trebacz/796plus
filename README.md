@@ -19,7 +19,12 @@ meteor add maazalik:highcharts
 
 5. Run the Meteor server: `meteor`
 
+### Screenshots
+
+![screenshot](https://dl.dropboxusercontent.com/u/1127246/796plus-screen-1.png)
+![screenshot](https://dl.dropboxusercontent.com/u/1127246/796plus-screen-2.png)
+
 ### Other
 
-* Donations BTC [3JNTo7aAd9pwfciLtPqBtfFmxs3MH5pDci](http://btc.blockr.io/address/info/3JNTo7aAd9pwfciLtPqBtfFmxs3MH5pDci)
+* Donations BTC: [3JNTo7aAd9pwfciLtPqBtfFmxs3MH5pDci](http://btc.blockr.io/address/info/3JNTo7aAd9pwfciLtPqBtfFmxs3MH5pDci)
 * [Create 796 Account](https://796.com/invite/do/134907)
