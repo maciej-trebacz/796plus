@@ -2,10 +2,14 @@
 
 ### Installation
 
-Step 1. Download zipped archive from this repository
+Step 1. Download [zipped archive](https://github.com/M4v3R/796plus/archive/master.zip) from this repository
+
 Step 2. Install [Meteor](https://www.meteor.com): `curl https://install.meteor.com/ | sh`
+
 Step 3. Create a new Meteor application: `meteor create 796`
+
 Step 4. Remove placeholder files and replace them with the ones from the archive
+
 Step 5. Add necessary packages:
 
 ```
