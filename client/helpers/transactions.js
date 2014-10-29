@@ -1,7 +1,7 @@
 Template.transactions.helpers({
     transactions: function() {
         Meteor.call('transactions');
-        return Transactions.find();
+        return Transactions.find({}, {sort: {create_time: -1}});
     },
     formatType: function() {
         if (this.type == 'kai') 
@@ -38,5 +38,49 @@ Template.transactions.helpers({
         });
 
         return sum.toFixed(8);
+    },
+    profitLossChart: function() {
+        var transactions = Transactions.find({loss_profit: {$ne: 0}}, {sort: {create_time: 1}}).fetch();
+        var data = [];
+        var lastValue = 0;
+
+        transactions.forEach(function(t) {
+            lastValue += parseFloat(t.loss_profit);
+            data.push([t.create_time * 1000, lastValue]);
+        });
+
+        console.log(data);
+
+        return {
+            chart: {
+                type: 'spline'
+            },
+            title: {
+                text: 'Profit/Loss Chart'
+            },
+            xAxis: {
+                type: 'datetime',
+                dateTimeLabelFormats: { // don't display the dummy year
+                    month: '%e. %b',
+                    year: '%b'
+                },
+                title: {
+                    text: 'Date'
+                }
+            },
+            yAxis: {
+                title: {
+                    text: 'BTC'
+                }            },
+            tooltip: {
+                headerFormat: '<b>{series.name}</b><br>',
+                pointFormat: '{point.x:%e. %b}: {point.y:.8f} BTC'
+            },
+
+            series: [{
+                name: 'Profit/Loss (BTC)',
+                data: data
+            }]
+        };
     }
 });

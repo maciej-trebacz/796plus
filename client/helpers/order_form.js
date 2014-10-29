@@ -10,7 +10,6 @@ Template.orderForm.events({
         Meteor.call('openPosition', direction, price, qty, margin, function(error, result) {
             if (error)
                 throwError(error);
-            
             else
                 showNotification("New position opened at " + price + "."); 
         });
