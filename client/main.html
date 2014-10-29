@@ -73,11 +73,21 @@
   {{#each errors}}
     {{> error}}
   {{/each}}
+  {{#each notifications}}
+    {{> notification}}
+  {{/each}}
   </div>
 </template>
 
 <template name="error">
   <div class="alert alert-danger" role="alert">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    {{message}}
+  </div>
+</template>
+
+<template name="notification">
+  <div class="alert alert-info" role="alert">
     <button type="button" class="close" data-dismiss="alert">&times;</button>
     {{message}}
   </div>

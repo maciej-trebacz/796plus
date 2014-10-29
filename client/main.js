@@ -48,6 +48,9 @@ Template.orders.events({
         Meteor.call('cancelOrder', $(e.currentTarget).data('id'), $(e.currentTarget).data('direction'), function(error, result) {
             if (error)
                 throwError(error);
+
+            else
+                showNotification("Order cancel request sent."); 
         });
     }
 });
@@ -64,6 +67,9 @@ Template.orderForm.events({
         Meteor.call('openPosition', direction, price, qty, margin, function(error, result) {
             if (error)
                 throwError(error);
+            
+            else
+                showNotification("New position opened at " + price + "."); 
         });
     },
     'keyup #qty': function(e) {
@@ -107,6 +113,9 @@ Template.positions.events({
         Meteor.call('closePosition', direction, price, qty, margin, function(error, result) {
             if (error)
                 throwError(error);
+            
+            else
+                showNotification("Position offset created at " + price + "."); 
         });
     }
 });
@@ -201,6 +210,9 @@ Template.login.events({
 Template.errors.helpers({
     errors: function() {
         return Errors.find();
+    },
+    notifications: function() {
+        return Notifications.find();
     }
 });
 
@@ -208,6 +220,13 @@ Template.error.rendered = function() {
   var error = this.data;
   Meteor.setTimeout(function () {
     Errors.remove(error._id);
+  }, 5000);
+};
+
+Template.notification.rendered = function() {
+  var notification = this.data;
+  Meteor.setTimeout(function () {
+    Notifications.remove(notification._id);
   }, 5000);
 };
 
@@ -237,4 +256,8 @@ TickerData.find({}).observe({
 
 throwError = function(message) {
     Errors.insert({message: message})
+}
+
+showNotification = function(message) {
+    Notifications.insert({message: message});
 }
