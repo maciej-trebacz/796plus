@@ -244,10 +244,17 @@ Template.main.rendered = function() {
 TickerData.find({}).observe({
     added: function(post) {
         lastPrice = post.last;
-        document.title = "796+ | " + post.last;
     },
     changed: function(post) {
-        if (lastPrice > post.last) {
+        lastPrice = post.last;
+    }
+});
+
+Trades.find({}).observe({
+    added: function(trade) {
+        console.log("TRADE: " + trade);
+        document.title = "796+ | " + trade.price;
+        if (trade.type == "sell") {
             $('#last-price').removeClass('higher');
             $('#last-price').addClass('lower');
         }
@@ -255,8 +262,6 @@ TickerData.find({}).observe({
             $('#last-price').removeClass('lower');
             $('#last-price').addClass('higher');
         }
-        lastPrice = post.last;
-        document.title = "796+ | " + post.last;
     }
 });
 
