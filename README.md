@@ -23,6 +23,7 @@ meteor add maazalik:highcharts
 ```
 
 Step 6. Run the Meteor server: `meteor`
+
 Step 7. Website is accessible at: `http://localhost:3000`
 
 ### Screenshots
