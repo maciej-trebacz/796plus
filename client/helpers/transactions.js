@@ -71,10 +71,11 @@ Template.transactions.helpers({
             yAxis: {
                 title: {
                     text: 'BTC'
-                }            },
+                }
+            },
             tooltip: {
                 headerFormat: '<b>{series.name}</b><br>',
-                pointFormat: '{point.x:%e. %b}: {point.y:.8f} BTC'
+                pointFormat: '{point.x:%e. %b %H:%M}: {point.y:.8f} BTC'
             },
 
             series: [{
