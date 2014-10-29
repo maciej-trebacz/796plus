@@ -21,5 +21,5 @@ meteor add maazalik:highcharts
 
 ### Other
 
-* Donations BTC [3JNTo7aAd9pwfciLtPqBtfFmxs3MH5pDci](http://btc.blockr.io/address/info/3JNTo7aAd9pwfciLtPqBtfFmxs3MH5pDci)
+* Donations BTC: [3JNTo7aAd9pwfciLtPqBtfFmxs3MH5pDci](http://btc.blockr.io/address/info/3JNTo7aAd9pwfciLtPqBtfFmxs3MH5pDci)
 * [Create 796 Account](https://796.com/invite/do/134907)
