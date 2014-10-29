@@ -1,4 +1,4 @@
-## 796.com API implementation in Meteor
+## 796.com Client in Meteor
 
 ### Installation
 
@@ -18,3 +18,8 @@ meteor add maazalik:highcharts
 ```
 
 5. Run the Meteor server: `meteor`
+
+### Other
+
+* Donations BTC [3JNTo7aAd9pwfciLtPqBtfFmxs3MH5pDci](http://btc.blockr.io/address/info/3JNTo7aAd9pwfciLtPqBtfFmxs3MH5pDci)
+* [Create 796 Account](https://796.com/invite/do/134907)
