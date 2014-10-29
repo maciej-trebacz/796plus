@@ -1,4 +1,5 @@
 <template name="transactions">
+  <h3>My Transactions</h3>
   <table class="table table-striped">
     <thead>
       <tr>
@@ -7,40 +8,51 @@
         <th>Price</th>
         <th>Quantity</th>
         <th>Initial Margin</th>
-        <th>Profit / Loss</th>
+        <th>Profit/Loss</th>
         <th>Fees</th>
         <th>Description</th>
       </tr>
     </thead>
     <tbody>
-    {{#each transactions}}
-      <tr>
-        <td>{{formatDate}}</td>
-        <td>{{formatType}} {{direction.capitalize}}</td>
-        <td>{{price}}</td>
-        <td>{{qty}} <small>BTC</small></td>
-        <td>{{margin}} <small>BTC</small></td>
-        <td>
-          {{#if isPLZero}}
-            -
-          {{else}}
-            {{#if isPLNegative}}
-              <span class="sell">{{loss_profit}} <small>BTC</small></span>
-              {{else}}
-              <span class="buy">{{loss_profit}} <small>BTC</small></span>
+      {{#each transactions}}
+        <tr>
+          <td>{{formatDate}}</td>
+          <td>{{formatType}} {{direction.capitalize}}</td>
+          <td>{{price}}</td>
+          <td>{{qty}} <small>BTC</small></td>
+          <td>{{margin}} <small>BTC</small></td>
+          <td>
+            {{#if isPLZero}}
+              -
+            {{else}}
+              {{#if isNegative loss_profit}}
+                <span class="sell">{{loss_profit}} <small>BTC</small></span>
+                {{else}}
+                <span class="buy">{{loss_profit}} <small>BTC</small></span>
+              {{/if}}
             {{/if}}
-          {{/if}}
-        </td>
+          </td>
+          <td>
+            {{#if isFeeZero}}
+              -
+            {{else}}
+              {{fee}} <small>BTC</small>
+            {{/if}}
+          </td>
+          <td>{{formatDescription}}</td>
+        </tr>
+      {{/each}}
+      <tr>
+        <td colspan="5" align="right"><strong>Profit/Loss Sum:</strong></td>
         <td>
-          {{#if isFeeZero}}
-            -
-          {{else}}
-            {{fee}} <small>BTC</small>
+          {{#if isNegative PLSum}}
+            <strong class="sell">{{PLSum}} <small>BTC</small></strong>
+            {{else}}
+            <strong class="buy">{{PLSum}} <small>BTC</small></strong>
           {{/if}}
         </td>
-        <td>{{formatDescription}}</td>
+        <td colspan="2"></td>
       </tr>
-    {{/each}}
     </tbody>
   </table>
 </template>

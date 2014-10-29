@@ -227,8 +227,8 @@ Template.transactions.helpers({
         var dateObj = new Date(this.create_time * 1000);
         return dateObj.format('m-d H:i:s');
     },
-    isPLNegative: function() {
-        return this.loss_profit < 0;
+    isNegative: function(number) {
+        return number < 0;
     },
     isPLZero: function() {
         return this.loss_profit == 0;
@@ -244,6 +244,14 @@ Template.transactions.helpers({
             case 'FT007': return 'Settlement';
             case 'FT008': return 'Margin Call';
         }
+    },
+    PLSum: function() {
+        var sum = 0;
+        Transactions.find().map(function(t) {
+            sum += parseFloat(t.loss_profit);
+        });
+
+        return sum.toFixed(8);
     }
 });
 
