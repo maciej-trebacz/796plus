@@ -1,0 +1,46 @@
+<template name="transactions">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Time</th>
+        <th>Type</th>
+        <th>Price</th>
+        <th>Quantity</th>
+        <th>Initial Margin</th>
+        <th>Profit / Loss</th>
+        <th>Fees</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+    {{#each transactions}}
+      <tr>
+        <td>{{formatDate}}</td>
+        <td>{{formatType}} {{direction.capitalize}}</td>
+        <td>{{price}}</td>
+        <td>{{qty}} <small>BTC</small></td>
+        <td>{{margin}} <small>BTC</small></td>
+        <td>
+          {{#if isPLZero}}
+            -
+          {{else}}
+            {{#if isPLNegative}}
+              <span class="sell">{{loss_profit}} <small>BTC</small></span>
+              {{else}}
+              <span class="buy">{{loss_profit}} <small>BTC</small></span>
+            {{/if}}
+          {{/if}}
+        </td>
+        <td>
+          {{#if isFeeZero}}
+            -
+          {{else}}
+            {{fee}} <small>BTC</small>
+          {{/if}}
+        </td>
+        <td>{{formatDescription}}</td>
+      </tr>
+    {{/each}}
+    </tbody>
+  </table>
+</template>

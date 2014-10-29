@@ -16,12 +16,12 @@
       {{#if orders.count}}
         {{#each orders}}
         <tr>
-          <td>{{getType}} {{direction.capitalize}}</td>
+          <td>{{formatType}} {{direction.capitalize}}</td>
           <td>{{qty}} <small>BTC</small></td>
           <td>{{price}}</td>
           <td>{{completed}} <small>BTC</small></td>
           <td>{{margin}} <small>BTC</small></td>
-          <td>{{{getStatus}}}</td>
+          <td>{{{formatStatus}}}</td>
           <td><a href="#" class="btn btn-sm btn-warning cancel-order" data-id="{{id}}" data-direction="{{direction}}">Cancel</a></td>
         </tr>
         {{/each}}

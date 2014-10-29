@@ -1,0 +1,25 @@
+<template name="futures">
+  {{> orders}}
+  {{> positions}}
+
+  <div class="row">
+    <div class="col-md-8" id="col-chart">
+      <div class="chart">
+        <iframe src="https://bitcoinwisdom.com/markets/796/futures" seamless width="1151" height="400"></iframe>
+      </div>
+      <a href="#" class="btn btn-default btn-xs pull-right full-chart"><span class="glyphicon glyphicon-resize-full"></span></a>
+    </div>
+    <div class="col-md-4" id="col-order-form">
+      {{> orderForm}}
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-8">
+      {{> orderbook}}
+    </div>
+    <div class="col-md-4">
+      {{> recentTrades}}
+    </div>
+  </div>
+</template>

@@ -7,6 +7,7 @@ Meteor.subscribe('asks');
 Meteor.subscribe('orders');
 Meteor.subscribe('positions');
 Meteor.subscribe('balances');
+Meteor.subscribe('transactions');
 
 Template.ticker.helpers({
     ticker: function () {
@@ -26,14 +27,14 @@ Template.orders.helpers({
     orders: function() {
         return Orders.find();
     },
-    getStatus: function() {
+    formatStatus: function() {
         switch (this.status) {
             case 'not': return '<span class="label label-warning">In Queue</label>'; break;
             case 'done': return '<span class="label label-success">Completed</label>'; break;
             case 'wait': return '<span class="label label-info">Waiting</label>'; break;
         }
     },
-    getType: function() {
+    formatType: function() {
         if (this.type == 'kai') 
             return 'Open';
         else
@@ -112,8 +113,7 @@ Template.positions.events({
 
         Meteor.call('closePosition', direction, price, qty, margin, function(error, result) {
             if (error)
-                throwError(error);
-            
+                throwError(error);       
             else
                 showNotification("Position offset created at " + price + "."); 
         });
@@ -134,11 +134,11 @@ Template.recentTrades.helpers({
 Template.trade.helpers({
     formatDate: function(date) {
         var dateObj = new Date(date * 1000);
-        return dateObj.formattedTime();
+        return dateObj.format('H:i:s');
     }
 });
 
-Template.main.helpers({
+Template.layout.helpers({
     currentUser: function() {
         return Session.get('username');
     },
@@ -147,7 +147,7 @@ Template.main.helpers({
     }
 });
 
-Template.main.events({
+Template.layout.events({
     'click #logout': function(e) {
         e.preventDefault();
 
@@ -212,6 +212,41 @@ Template.login.events({
     }
 });
 
+Template.transactions.helpers({
+    transactions: function() {
+        Meteor.call('transactions');
+        return Transactions.find();
+    },
+    formatType: function() {
+        if (this.type == 'kai') 
+            return 'Open';
+        else
+            return 'Close';
+    },
+    formatDate: function() {
+        var dateObj = new Date(this.create_time * 1000);
+        return dateObj.format('m-d H:i:s');
+    },
+    isPLNegative: function() {
+        return this.loss_profit < 0;
+    },
+    isPLZero: function() {
+        return this.loss_profit == 0;
+    },
+    isFeeZero: function() {
+        return this.fee == 0;
+    },
+    formatDescription: function() {
+        switch (this.description) {
+            case 'FT004': return 'Cancelled';
+            case 'FT005': return 'Completed';
+            case 'FT006': return 'Order?';
+            case 'FT007': return 'Settlement';
+            case 'FT008': return 'Margin Call';
+        }
+    }
+});
+
 Template.errors.helpers({
     errors: function() {
         return Errors.find();
@@ -246,7 +281,7 @@ TickerData.find({}).observe({
 
 Trades.find({}).observe({
     added: function(trade) {
-        console.log("TRADE: " + trade);
+        //console.log("TRADE: " + trade);
         document.title = "796+ | " + trade.price;
         if (trade.type == "sell") {
             $('#last-price').removeClass('higher');
