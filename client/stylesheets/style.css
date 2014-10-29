@@ -62,3 +62,15 @@ body {
   margin-bottom: 5px;
   pointer-events: auto;
 }
+
+.table td {
+    vertical-align: middle !important;
+}
+
+.btn-paste-price {
+    position: absolute; 
+    top: 11px; 
+    right: 10px;
+    width: 23px;
+    height: 23px;
+}

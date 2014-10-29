@@ -1,4 +1,4 @@
-var REFRESH_INTERVAL = 1500;
+var REFRESH_INTERVAL = 2500;
 
 Meteor.publish('tickerdata', function() {
     return TickerData.find(); 

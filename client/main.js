@@ -117,6 +117,11 @@ Template.positions.events({
             else
                 showNotification("Position offset created at " + price + "."); 
         });
+    },
+    'click .btn-paste-price': function(e) {
+        e.preventDefault();
+
+        $(e.currentTarget).parent().find('input').val(lastPrice);
     }
 });
 
@@ -250,6 +255,7 @@ TickerData.find({}).observe({
             $('#last-price').removeClass('lower');
             $('#last-price').addClass('higher');
         }
+        lastPrice = post.last;
         document.title = "796+ | " + post.last;
     }
 });
