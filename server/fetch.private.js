@@ -1,4 +1,24 @@
-var REFRESH_INTERVAL = 2500;
+var REFRESH_USER_INTERVAL = 1500;
+var REFRESH_FUTURES_INTERVAL = 3500;
+
+Meteor.setInterval(function () { 
+    if (ServerSession.get('accessToken') != null) {
+        // Balances
+        Meteor.http.call('GET', 'https://796.com/v1/user/get_balance?access_token=' + encodeURIComponent(ServerSession.get('accessToken')), {}, function(error, result) {
+            if (error) return;
+            var body = JSON.parse(result.content);
+
+            if (body.errno == 0)
+            {
+                var balances = Balances.findOne({});
+                if (! balances)
+                    Balances.insert(body.data);
+                else 
+                    Balances.update(balances._id, {$set: body.data});
+            }
+        });
+    }
+}, REFRESH_USER_INTERVAL);
 
 Meteor.setInterval(function () { 
     if (ServerSession.get('accessToken') != null) {
@@ -41,20 +61,5 @@ Meteor.setInterval(function () {
 
             Positions.remove({updated: { $lt: (new Date()).getTime() - 1000 }});
         });
-
-        // Balances
-        Meteor.http.call('GET', 'https://796.com/v1/user/get_balance?access_token=' + encodeURIComponent(ServerSession.get('accessToken')), {}, function(error, result) {
-            if (error) return;
-            var body = JSON.parse(result.content);
-
-            if (body.errno == 0)
-            {
-                var balances = Balances.findOne({});
-                if (! balances)
-                    Balances.insert(body.data);
-                else 
-                    Balances.update(balances._id, {$set: body.data});
-            }
-        });
     }
-}, REFRESH_INTERVAL);
+}, REFRESH_FUTURES_INTERVAL);
