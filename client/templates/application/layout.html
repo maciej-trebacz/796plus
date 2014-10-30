@@ -17,10 +17,16 @@
 
         {{#if currentUser}}
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="/transactions">{{currentUser}}</a></li>
-            <li><a data-toggle="tooltip" data-placement="bottom" title="Main Wallet"><strong>{{balances.main_wallet.btc}}</strong> BTC</a></li>
-            <li><a data-toggle="tooltip" data-placement="bottom" title="Futures Wallet"><strong>{{balances.futures_wallet.btc}}</strong> BTC</a></li>
-            <li><a href="#" id="logout">Logout</a></li>
+            <li><a href="#" data-toggle="tooltip" data-placement="bottom" title="Main Wallet"><strong>{{balances.main_wallet.btc}}</strong> BTC</a></li>
+            <li><a href="#" data-toggle="tooltip" data-placement="bottom" title="Futures Wallet"><strong>{{balances.futures_wallet.btc}}</strong> BTC</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{currentUser}} <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                <li><a href="{{pathFor 'transactions'}}">My Transactions</a></li>
+                <li class="divider"></li>
+                <li><a href="#" id="logout">Logout</a></li>
+              </ul>
+            </li>
           </ul>
         {{/if}}
       </div>
