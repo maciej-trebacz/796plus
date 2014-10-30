@@ -5,16 +5,16 @@ body {
 }
 
 .higher, .bid, .buy {
-    color: #0a0;
+  color: #0a0;
 }
 
 .lower, .ask, .sell {
-    color: #c00;
+  color: #c00;
 }
 
 .chart {
   overflow: hidden;
-  width: 750px;/*820px;*/
+  width: 750px;
   height: 367px;
   margin-bottom: 5px;
 }
@@ -64,7 +64,7 @@ body {
 }
 
 .table td {
-    vertical-align: middle !important;
+  vertical-align: middle !important;
 }
 
 .btn-paste-price {
@@ -78,4 +78,10 @@ body {
 .footer {
   padding: 15px;
   font-size: 13px;
+}
+
+@media only screen and (max-width : 1200px) {
+  .chart {
+    width: 616px;
+  }
 }

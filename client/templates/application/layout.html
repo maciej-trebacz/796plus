@@ -74,7 +74,7 @@
 
 <template name="ticker">
   <li><a><b>Last:</b> <span id="last-price">{{ticker.last}}</span></a></li>
-  <li><a><b>High:</b> {{ticker.high}}</a></li>
-  <li><a><b>Low:</b> {{ticker.low}}</a></li>
-  <li><a><b>Last update:</b> {{ticker.date}}</a></li>
+  <li class="hidden-xs"><a><b>High:</b> {{ticker.high}}</a></li>
+  <li class="hidden-xs"><a><b>Low:</b> {{ticker.low}}</a></li>
+  <li class="hidden-xs hidden-sm"><a><b>Last update:</b> {{ticker.date}}</a></li>
 </template>
