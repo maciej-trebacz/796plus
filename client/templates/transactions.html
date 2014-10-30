@@ -1,7 +1,9 @@
 <template name="transactions">
   <h3>My Transactions</h3>
 
-  {{> highchartsHelper chartId="test" chartWidth="100%" charHeight="100%" chartObject=profitLossChart}}
+  <div class="hidden-xs">
+    {{> highchartsHelper chartId="test" chartWidth="100%" charHeight="100%" chartObject=profitLossChart}}
+  </div>
 
   <table class="table table-striped">
     <thead>
