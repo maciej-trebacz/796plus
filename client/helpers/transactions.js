@@ -39,6 +39,9 @@ Template.transactions.helpers({
 
         return sum.toFixed(8);
     },
+    PLPercent: function(margin, profitLoss) {
+        return (parseFloat(profitLoss) * 100 / parseFloat(margin)).toFixed(2);
+    },
     profitLossChart: function() {
         var transactions = Transactions.find({loss_profit: {$ne: 0}}, {sort: {create_time: 1}}).fetch();
         var data = [];
