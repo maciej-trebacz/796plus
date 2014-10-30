@@ -7,11 +7,8 @@ Template.orderForm.events({
         var margin = $('#order-form').find('#margin').val();
         var price = $('#order-form').find('#price').val();
 
-        Meteor.call('openPosition', direction, price, qty, margin, function(error, result) {
-            if (error)
-                throwError(error);
-            else
-                showNotification("New position opened at " + price + "."); 
+        makeRequest('openPosition', direction, price, qty, margin, function(error, result) {
+            showNotification("New position opened at " + price + "."); 
         });
     },
     'keyup #qty': function(e) {

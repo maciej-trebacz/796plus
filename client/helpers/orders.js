@@ -21,12 +21,8 @@ Template.orders.events({
     'click .cancel-order': function(e) {
         e.preventDefault();
 
-        Meteor.call('cancelOrder', $(e.currentTarget).data('id'), $(e.currentTarget).data('direction'), function(error, result) {
-            if (error)
-                throwError(error);
-
-            else
-                showNotification("Order cancel request sent."); 
+        makeRequest('cancelOrder', $(e.currentTarget).data('id'), $(e.currentTarget).data('direction'), function(error, result) {
+            showNotification("Order cancel request sent."); 
         });
     }
 });
